@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- Header -->
+<div th:fragment="main_header" class="main-header">
+    <!-- Logo Header -->
+    <div class="logo-header" data-background-color="blue">
+
+        <a th:href="@{/}" class="logo">
+            <img th:src="@{/assets/img/logo.svg}" alt="navbar brand" class="navbar-brand">
+        </a>
+        <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon">
+						<i class="icon-menu"></i>
+					</span>
+        </button>
+        <button class="topbar-toggler more"><i class="icon-options-vertical"></i></button>
+        <div class="nav-toggle">
+            <button class="btn btn-toggle toggle-sidebar">
+                <i class="icon-menu"></i>
+            </button>
+        </div>
+    </div>
+    <!-- End Logo Header -->
+
+    <!-- Navbar Header -->
+    <nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue2">
+
+        <div class="container-fluid">
+            <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
+                <li class="nav-item dropdown hidden-caret">
+                    <a class="dropdown-toggle profile-pic" data-toggle="dropdown" th:href="@{/}" aria-expanded="false">
+                        <div class="avatar-sm">
+                            <img th:src="@{/assets/img/profile.jpg}" alt="..." class="avatar-img rounded-circle">
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user animated fadeIn">
+                        <div class="dropdown-user-scroll scrollbar-outer">
+                            <li>
+                                <div class="user-box">
+                                    <div class="avatar-lg"><img th:src="@{/assets/img/profile.jpg}" alt="image profile" class="avatar-img rounded"></div>
+                                    <div class="u-text">
+                                        <h4>Chinonso</h4>
+                                        <p class="text-muted">hello@example.com</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" th:href="@{/#}">My Profile</a>
+                                <a class="dropdown-item" th:href="@{/#}">Logout</a>
+                            </li>
+                        </div>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- End Navbar -->
+</div>
+<!-- Footer -->
+
+<!-- Sidebar -->
+<div th:fragment="sidebar" class="sidebar sidebar-style-2">
+    <div class="sidebar-wrapper scrollbar scrollbar-inner">
+        <div class="sidebar-content">
+            <div class="user">
+                <div class="avatar-sm float-left mr-2">
+                    <img th:src="@{/assets/img/profile.jpg}" alt="profile picture" class="avatar-img rounded-circle">
+                </div>
+                <div class="info">
+                    <a data-toggle="collapse" th:href="@{/#}" aria-expanded="true">
+								<span>
+									Chinonso
+									<span class="user-level">Administrator</span>
+								</span>
+                    </a>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <ul class="nav nav-primary">
+                <li class="nav-item active">
+                    <a th:href="@{/}" aria-expanded="false">
+                        <i class="fas fa-home"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                <li class="nav-section">
+							<span class="sidebar-mini-icon">
+								<i class="fa fa-ellipsis-h"></i>
+							</span>
+                    <h4 class="text-section">Components</h4>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/classes}">
+                        <i class="fas fa-layer-group"></i>
+                        <p>Classes</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/subjects}">
+                        <i class="fas fa-th-list"></i>
+                        <p>Subjects</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/students}">
+                        <i class="fas fa-graduation-cap"></i>
+                        <p>Students</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/faculty}">
+                        <i class="fas fa-table"></i>
+                        <p>Faculty</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/users}">
+                        <i class="fas fa-users"></i>
+                        <p>Manage Users</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- End Sidebar -->
+
+<!-- Footer -->
+<footer th:fragment="footer" class="footer">
+    <div class="container-fluid">
+        <nav class="pull-left">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://www.github.com/thenextxchapter">
+                        Github
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        Help
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        Licenses
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</footer>
+<!-- Footer -->
+</body>
+</html>
