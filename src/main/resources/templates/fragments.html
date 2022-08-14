@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="page_head(title)">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="content-type" content="text/html" charset="UTF-8">
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+
+    <title>[[${title}]]</title>
+
+    <!-- Bootstrap css -->
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/bootstrap.min.css}">
+
+    <!-- Custom css -->
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/atlantis.min.css}">
+
+    <!-- Custom fonts -->
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/fonts.min.css}">
+
+    <!-- Favicon -->
+    <link rel="icon" th:href="@{/assets/img/icon.ico}" type="image/x-icon"/>
+
+    <!-- Font awesome 5 -->
+    <script th:src="@{/assets/js/plugin/webfont/webfont.min.js}"></script>
+    <script>
+        WebFont.load({
+            google: {"families":["Lato:300,400,700,900"]},
+            custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['../static/assets/css/fonts.min.css']},
+            active: function() {
+                sessionStorage.fonts = true;
+            }
+        });
+    </script>
+
+    <!--   Core JS Files   -->
+    <script th:src="@{/assets/js/core/jquery.3.2.1.min.js}"></script>
+    <script th:src="@{/assets/js/core/popper.min.js}"></script>
+    <script th:src="@{/assets/js/core/bootstrap.min.js}"></script>
+
+    <!-- jQuery UI -->
+    <script th:src="@{/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js}"></script>
+    <script th:src="@{/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js}"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script th:src="@{/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js}"></script>
+
+    <!-- Datatables -->
+    <script th:src="@{/assets/js/plugin/datatables/datatables.min.js}"></script>
+
+    <!-- Bootstrap Notify -->
+    <script th:src="@{/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js}"></script>
+
+    <!-- jQuery Vector Maps -->
+    <script th:src="@{/assets/js/plugin/jqvmap/jquery.vmap.min.js}"></script>
+    <script th:src="@{/assets/js/plugin/jqvmap/maps/jquery.vmap.world.js}"></script>
+
+    <!-- Sweet Alert -->
+    <script th:src="@{/assets/js/plugin/sweetalert/sweetalert.min.js}"></script>
+
+    <!-- Atlantis JS -->
+    <script th:src="@{/assets/js/atlantis.min.js}"></script>
+
+</head>
+<body>
+    <div th:fragment="status(enabled, entityName, entityURL)" th:remove="tag">
+        <a th:if="${enabled == true}"
+           class="badge badge-success"
+           th:href="@{${entityURL} + '/enabled/false'}"
+           th:title="'Disable this ' + ${entityName}" >
+            Active
+        </a>
+        <a th:if="${enabled == false}"
+           class="badge badge-danger"
+           th:href="@{${entityURL} + '/enabled/true'}"
+           th:title="'Enable this ' + ${entityName}" >
+            Disabled
+        </a>
+    </div>
+
+    <div th:fragment="edit(editURL)" th:remove="tag">
+        <a type="button" data-toggle="tooltip" title=""
+           class="btn btn-link btn-primary btn-lg"
+           data-original-title="Edit"
+           th:href="@{${editURL}}"
+           style="padding: .65rem 1.4rem; text-decoration: none !important;">
+            <i class="icon-note"></i>
+        </a>
+    </div>
+
+    <div th:fragment="delete(deleteURL, entityId)" th:remove="tag">
+        <a type="button" data-toggle="tooltip" title=""
+           class="btn btn-link btn-danger"
+           data-original-title="Remove"
+           th:href="@{${deleteURL}}"
+           th:entityId="${entityId}"
+           th:userId="${entityId}"
+           style="padding: .65rem 1.4rem; text-decoration: none !important;">
+            <i class="icon-trash"></i>
+        </a>
+    </div>
+
+</body>
+</html>
