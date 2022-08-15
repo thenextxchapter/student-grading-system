@@ -79,6 +79,12 @@ public class User {
 	}
 
 	@Transient
+	public String getPhotosImagePath() {
+		if (id == null || photo == null) return "/assets/img/cameraSvg.png";
+		return "/user-photos/" + this.id + "/" + this.photo;
+	}
+
+	@Transient
 	public String getFullName() {
 		return firstName + " " + lastName;
 	}
