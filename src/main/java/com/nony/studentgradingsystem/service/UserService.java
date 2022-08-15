@@ -2,9 +2,11 @@ package com.nony.studentgradingsystem.service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import com.nony.studentgradingsystem.entity.Role;
 import com.nony.studentgradingsystem.entity.User;
+import com.nony.studentgradingsystem.exception.UserNotFoundException;
 import com.nony.studentgradingsystem.repository.RoleRepository;
 import com.nony.studentgradingsystem.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,4 +73,31 @@ public class UserService {
 		}
 
 		return true;
-	}}
+	}
+
+	public User updateAccount(User userInForm) {
+		User userInDB = userRepo.findById(userInForm.getId()).get();
+
+		if (!userInForm.getPassword().isEmpty()) {
+			userInDB.setPassword(userInForm.getPassword());
+			encodePassword(userInDB);
+		}
+
+		if (userInForm.getPhoto() != null) {
+			userInDB.setPhoto(userInForm.getPhoto());
+		}
+
+		userInDB.setFirstName(userInForm.getFirstName());
+		userInDB.setLastName(userInForm.getLastName());
+
+		return userRepo.save(userInDB);
+	}
+
+	public User get(Integer id) throws UserNotFoundException {
+		try {
+			return userRepo.findById(id).get();
+		} catch (NoSuchElementException exception) {
+			throw new UserNotFoundException("Could not find any user with ID " + id);
+		}
+	}
+}

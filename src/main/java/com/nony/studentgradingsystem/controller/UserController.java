@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.nony.studentgradingsystem.entity.Role;
 import com.nony.studentgradingsystem.entity.User;
+import com.nony.studentgradingsystem.exception.UserNotFoundException;
 import com.nony.studentgradingsystem.service.UserService;
 import com.nony.studentgradingsystem.utils.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -69,5 +71,27 @@ public class UserController {
 		redirectAttributes.addFlashAttribute("message", "The user has been saved successfully.");
 
 		return "redirect:/users";
+	}
+
+	@GetMapping("/users/edit/{id}")
+	public String editUser(
+			@PathVariable(name = "id") Integer id,
+			RedirectAttributes redirectAttributes,
+			Model model
+	) {
+		try {
+			User user = service.get(id);
+			List<Role> listRoles = service.listRoles();
+
+			model.addAttribute("user", user);
+			model.addAttribute("listRoles", listRoles);
+			model.addAttribute("pageTitle", "Edit User (ID: " + id + ")");
+			model.addAttribute("headerTitle", "Edit User");
+
+			return "users/user_form";
+		} catch (UserNotFoundException exception) {
+			redirectAttributes.addFlashAttribute("message", exception.getMessage());
+			return "redirect:/users";
+		}
 	}
 }
