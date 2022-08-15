@@ -3049,19 +3049,19 @@ label {
   margin-right: 15px; }
 
 /*     CheckBox Input    */
-.select-all-checkbox + .form-check-sign:before {
+.select-all-checkbox ~ .form-check-sign:before {
   background: #ccc !important;
   border-color: #ccc !important; }
 
 .form-check [type="checkbox"]:not(:checked), .form-check [type="checkbox"]:checked {
   position: absolute;
   left: -9999px; }
-.form-check [type="checkbox"]:not(:checked) + .form-check-sign, .form-check [type="checkbox"]:checked + .form-check-sign, .form-check [type="checkbox"] + .form-check-sign {
+.form-check [type="checkbox"]:not(:checked) ~ .form-check-sign, .form-check [type="checkbox"]:checked ~ .form-check-sign, .form-check [type="checkbox"] ~ .form-check-sign {
   position: relative;
   padding-left: 2em;
   color: #575962;
   cursor: pointer; }
-.form-check [type="checkbox"]:not(:checked) + .form-check-sign:before, .form-check [type="checkbox"]:checked + .form-check-sign:before, .form-check [type="checkbox"] + .form-check-sign:before {
+.form-check [type="checkbox"]:not(:checked) ~ .form-check-sign:before, .form-check [type="checkbox"]:checked ~ .form-check-sign:before, .form-check [type="checkbox"] ~ .form-check-sign:before {
   content: '';
   position: absolute;
   left: 0;
@@ -3071,7 +3071,7 @@ label {
   border: 1px solid #ccc;
   background: transparent;
   border-radius: 4px; }
-.form-check [type="checkbox"]:not(:checked) + .form-check-sign:after, .form-check [type="checkbox"]:checked + .form-check-sign:after, .form-check [type="checkbox"] + .form-check-sign:after {
+.form-check [type="checkbox"]:not(:checked) ~ .form-check-sign:after, .form-check [type="checkbox"]:checked ~ .form-check-sign:after, .form-check [type="checkbox"] ~ .form-check-sign:after {
   content: "\f00c";
   display: inline-block;
   position: absolute;
@@ -3085,27 +3085,27 @@ label {
   color: #1572E8;
   transition: all .2s;
   font-family: 'Font Awesome 5 Solid'; }
-.form-check [type="checkbox"]:not(:checked) + .form-check-sign:after {
+.form-check [type="checkbox"]:not(:checked) ~ .form-check-sign:after {
   opacity: 0;
   transform: scale(0); }
-.form-check [type="checkbox"]:checked + .form-check-sign {
+.form-check [type="checkbox"]:checked ~ .form-check-sign {
   font-weight: 400; }
-  .form-check [type="checkbox"]:checked + .form-check-sign:after {
+  .form-check [type="checkbox"]:checked ~ .form-check-sign:after {
     opacity: 1;
     transform: scale(1); }
-.form-check [type="checkbox"]:disabled:not(:checked) + .form-check-sign:before {
+.form-check [type="checkbox"]:disabled:not(:checked) ~ .form-check-sign:before {
   box-shadow: none;
   border-color: #bbb;
   background-color: #ddd; }
-.form-check [type="checkbox"]:disabled:checked + .form-check-sign:before {
+.form-check [type="checkbox"]:disabled:checked ~ .form-check-sign:before {
   box-shadow: none;
   border-color: #bbb;
   background-color: #ddd; }
-.form-check [type="checkbox"]:disabled:checked + .form-check-sign:after {
+.form-check [type="checkbox"]:disabled:checked ~ .form-check-sign:after {
   color: #999; }
-.form-check [type="checkbox"]:disabled + .form-check-sign {
+.form-check [type="checkbox"]:disabled ~ .form-check-sign {
   color: #aaa; }
-.form-check [type="checkbox"]:checked:focus + .form-check-sign:before, .form-check [type="checkbox"]:not(:checked):focus + .form-check-sign:before {
+.form-check [type="checkbox"]:checked:focus ~ .form-check-sign:before, .form-check [type="checkbox"]:not(:checked):focus ~ .form-check-sign:before {
   border: 1px solid #ccc; }
 
 .form-check-sign:hover:before {
@@ -5003,7 +5003,7 @@ label.error {
   padding-right: .5rem;
   font-size: 1rem; }
 
-.selectgroup-input:checked + .selectgroup-button {
+.selectgroup-input:checked ~ .selectgroup-button {
   border-color: #1572E8;
   z-index: 1;
   color: #1572E8;
@@ -5026,7 +5026,7 @@ label.error {
   .selectgroup-pills .selectgroup-button {
     border-radius: 50px !important; }
 
-.selectgroup.selectgroup-primary .selectgroup-input:checked + .selectgroup-button {
+.selectgroup.selectgroup-primary .selectgroup-input:checked ~ .selectgroup-button {
   border-color: #1572E8;
   color: #1572E8;
   background: rgba(21, 114, 232, 0.15); }
@@ -5034,7 +5034,7 @@ label.error {
   border-color: #1572E8;
   color: #1572E8;
   box-shadow: 0 0 0 2px rgba(21, 114, 232, 0.25); }
-.selectgroup.selectgroup-secondary .selectgroup-input:checked + .selectgroup-button {
+.selectgroup.selectgroup-secondary .selectgroup-input:checked ~ .selectgroup-button {
   border-color: #6861CE;
   color: #6861CE;
   background: rgba(104, 97, 206, 0.15); }
@@ -5042,7 +5042,7 @@ label.error {
   border-color: #6861CE;
   color: #6861CE;
   box-shadow: 0 0 0 2px rgba(104, 97, 206, 0.25); }
-.selectgroup.selectgroup-info .selectgroup-input:checked + .selectgroup-button {
+.selectgroup.selectgroup-info .selectgroup-input:checked ~ .selectgroup-button {
   border-color: #48ABF7;
   color: #48ABF7;
   background: rgba(72, 171, 247, 0.15); }
@@ -5050,7 +5050,7 @@ label.error {
   border-color: #48ABF7;
   color: #48ABF7;
   box-shadow: 0 0 0 2px rgba(72, 171, 247, 0.25); }
-.selectgroup.selectgroup-success .selectgroup-input:checked + .selectgroup-button {
+.selectgroup.selectgroup-success .selectgroup-input:checked ~ .selectgroup-button {
   border-color: #31CE36;
   color: #31CE36;
   background: rgba(49, 206, 54, 0.15); }
@@ -5058,7 +5058,7 @@ label.error {
   border-color: #31CE36;
   color: #31CE36;
   box-shadow: 0 0 0 2px rgba(49, 206, 54, 0.25); }
-.selectgroup.selectgroup-warning .selectgroup-input:checked + .selectgroup-button {
+.selectgroup.selectgroup-warning .selectgroup-input:checked ~ .selectgroup-button {
   border-color: #FFAD46;
   color: #FFAD46;
   background: rgba(255, 173, 70, 0.15); }
@@ -5066,7 +5066,7 @@ label.error {
   border-color: #FFAD46;
   color: #FFAD46;
   box-shadow: 0 0 0 2px rgba(255, 173, 70, 0.25); }
-.selectgroup.selectgroup-danger .selectgroup-input:checked + .selectgroup-button {
+.selectgroup.selectgroup-danger .selectgroup-input:checked ~ .selectgroup-button {
   border-color: #F25961;
   color: #F25961;
   background: rgba(242, 89, 97, 0.15); }

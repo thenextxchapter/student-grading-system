@@ -13,7 +13,7 @@
                         <h4 class="page-title">Manage Users</h4>
                         <ul class="breadcrumbs">
                             <li class="nav-home">
-                                <a th:href="@{/#}">
+                                <a th:href="@{/}">
                                     <i class="flaticon-home"></i>
                                 </a>
                             </li>
@@ -25,9 +25,25 @@
                             </li>
                         </ul>
                     </div>
+
+                    <div th:replace="fragments :: message"></div>
+
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
+                                <div class="card-header">
+                                    <div class="d-flex align-items-center">
+<!--                                        <h4 class="card-title">Add Row</h4>-->
+                                        <button class="btn btn-primary btn-round ml-auto">
+                                            <a class="text-white"
+                                               style="text-decoration: none !important;"
+                                               th:href="@{/users/new}">
+                                                <i class="fa fa-plus"></i>
+                                                Add User
+                                            </a>
+                                        </button>
+                                    </div>
+                                </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <table id="basic-datatables" class="display table table-hover" cellspacing="0" >
@@ -56,7 +72,12 @@
                                             <tbody>
                                                 <tr th:each="user : ${userList}">
                                                     <td th:text="${user.id}"></td>
-                                                    <td>...</td>
+                                                    <td>
+                                                        <div class="aside">
+                                                            <img class="img-avatar img-sm" style="object-fit: cover" th:if="${user.photo != null}" th:src="@{${user.photosImagePath}}">
+                                                            <img class="img-avatar img-sm" style="object-fit: cover" th:if="${user.photo == null}" th:src="@{/assets/img/cameraSvg.png}">
+                                                        </div>
+                                                    </td>
                                                     <td th:text="${user.firstName} + ' ' + ${user.lastName}"></td>
                                                     <td th:text="${user.email}"></td>
                                                     <td>

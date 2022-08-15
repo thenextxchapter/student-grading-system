@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: page_head('New User - Shop Down Admin')"></head>
+<body>
+    <div class="wrapper">
+        <div th:replace="navigation :: main_header"></div>
+        <div th:replace="navigation :: sidebar"></div>
+
+        <div class="main-panel">
+            <div class="content">
+                <div class="page-inner">
+                    <div class="page-header">
+                        <h4 class="page-title">[[${pageTitle}]]</h4>
+                        <ul class="breadcrumbs">
+                            <li class="nav-home">
+                                <a th:href="@{/}">
+                                    <i class="flaticon-home"></i>
+                                </a>
+                            </li>
+                            <li class="separator">
+                                <i class="flaticon-right-arrow"></i>
+                            </li>
+                            <li class="nav-item">
+                                <a th:href="@{/users}">Users</a>
+                            </li>
+                            <li class="separator">
+                                <i class="flaticon-right-arrow"></i>
+                            </li>
+                            <li class="nav-item">
+                                <a th:href="@{/#}">New User</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        [[${headerTitle}]]
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <form th:action="@{/users/save}" method="post" th:object="${user}"
+                                          enctype="multipart/form-data"
+                                          onsubmit="return checkEmailUnique(this);">
+                                        <input type="hidden" th:field="*{id}">
+                                        <div class="form-group">
+                                            <label>First Name</label>
+                                            <input type="text" class="form-control" th:field="*{firstName}"
+                                                   required minlength="2" maxlength="45" placeholder="First name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Last Name</label>
+                                            <input type="text" class="form-control" th:field="*{lastName}"
+                                                   required minlength="2" maxlength="45" placeholder="Last name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Email address</label>
+                                            <input type="email" class="form-control" placeholder="Enter email"
+                                                   th:field="*{email}" required minlength="8" maxlength="128">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Password</label>
+                                            <input type="password" class="form-control"
+                                                   placeholder="At least 8 characters"
+                                                   th:field="*{password}" required minlength="8" maxlength="20">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Roles</label>
+                                            &nbsp;
+                                            <div class="selectgroup selectgroup-pills">
+                                                <th:block th:each="role: ${listRoles}">
+                                                    <label class="selectgroup-item">
+                                                        <input type="checkbox" th:field="*{roles}" role="checkbox" th:value="${role.id}"
+                                                               class="selectgroup-input">
+                                                        <span class="selectgroup-button">[[${role.name}]]</span>
+                                                    </label>
+                                                </th:block>
+                                            </div>
+                                        </div>
+                                        <!--<div class="form-check">
+                                            <label class="form-label">Roles</label>
+                                            <th:block th:each="role: ${listRoles}">
+                                                <label class="form-check-label">
+                                                    <input th:field="*{roles}" class="form-check-input" type="checkbox" role="switch" th:value="${role.id}">
+                                                    <span class="form-check-sign" th:text="${role.name}"></span>
+                                                </label>
+                                            </th:block>
+                                        </div>-->
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input th:field="*{enabled}" class="form-check-input" type="checkbox" role="switch" value="">
+                                                <span class="form-check-sign">Check to enable user</span>
+                                            </label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-form-label">Upload Photo</label>
+                                            <div class="col-9 mb-3">
+                                                <input type="hidden" th:field="*{photo}">
+                                                <label class="form-label">
+                                                    <input type="file" id="fileImage" name="image" class="form-control" accept="image/png, image/jpeg">
+                                                </label>
+                                            </div>
+                                            <div class="gallery-uploader-wrap media-width col-3 mb-3">
+                                                <label class="uploader-img">
+                                                    <img id="thumbnail" width="100" th:src="@{${user.photosImagePath}}">
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="card-action">
+                                            <input type="submit" class="btn btn-primary" value="Save">
+                                            &nbsp;
+                                            <button type="button" id="buttonCancel" class="btn btn-outline-danger">Cancel</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div th:replace="modal_fragments :: modal_dialog"></div>
+
+            <div th:replace="navigation :: footer"></div>
+        </div>
+    </div>
+
+    <script >
+        moduleURL = "[[@{/users}]]"
+
+        $(document).ready(function() {
+            $('#basic-datatables').DataTable({});
+        });
+
+        function checkEmailUnique(form) {
+            const url = "[[@{/users/check-email}]]";
+            const userEmail = $("#email").val();
+            const userId = $("#id").val();
+            // Making an AJAX call with Spring security, we need to pass the csrf value
+            const csrfValue = $("input[name='_csrf']").val();
+            const params = {id: userId, email: userEmail, _csrf: csrfValue};
+
+            $.post(url, params, function (response){
+                if (response === "OK") {
+                    form.submit();
+                } else if (response === "Duplicated") {
+                    showModalWarning("There is another user having the email " + userEmail);
+                } else {
+                    showModalError("Unknown response from server");
+                }
+            }).fail(function () {
+                showModalError("Could not connect to the server");
+            });
+            return false;
+        }
+    </script>
+    <script th:src="@{/assets/js/form.js}"></script>
+
+</body>
+</html>
