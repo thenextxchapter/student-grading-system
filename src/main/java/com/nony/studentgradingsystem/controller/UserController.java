@@ -1,11 +1,13 @@
 package com.nony.studentgradingsystem.controller;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
 import com.nony.studentgradingsystem.entity.Role;
 import com.nony.studentgradingsystem.entity.User;
 import com.nony.studentgradingsystem.exception.UserNotFoundException;
+import com.nony.studentgradingsystem.export.UserPDFExporter;
 import com.nony.studentgradingsystem.service.UserService;
 import com.nony.studentgradingsystem.utils.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,5 +111,12 @@ public class UserController {
 			redirectAttributes.addFlashAttribute("message", exception.getMessage());
 		}
 		return "redirect:/users";
+	}
+
+	@GetMapping("/users/export/pdf")
+	public void exportToPDF(HttpServletResponse response) throws IOException {
+		List<User> listUsers = service.listAll();
+		UserPDFExporter exporter = new UserPDFExporter();
+		exporter.export(listUsers, response);
 	}
 }

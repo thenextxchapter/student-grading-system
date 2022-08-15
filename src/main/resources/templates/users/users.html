@@ -33,15 +33,30 @@
                             <div class="card">
                                 <div class="card-header">
                                     <div class="d-flex align-items-center">
-<!--                                        <h4 class="card-title">Add Row</h4>-->
-                                        <button class="btn btn-primary btn-round ml-auto">
-                                            <a class="text-white"
-                                               style="text-decoration: none !important;"
-                                               th:href="@{/users/new}">
-                                                <i class="fa fa-plus"></i>
+                                        <div class="card-tools ml-auto">
+                                            <a th:href="@{/users/export/pdf}" class="btn btn-info btn-border btn-round btn-sm">
+												<span class="btn-label">
+													<i class="fa fa-print"></i>
+												</span>
+                                                Print
+                                            </a>
+                                            &nbsp;
+                                            <a th:href="@{/users/new}" class="btn btn-info btn-border btn-round btn-sm">
+												<span class="btn-label">
+													<i class="fa fa-plus"></i>
+												</span>
                                                 Add User
                                             </a>
-                                        </button>
+
+                                            <!--<button class="btn btn-primary btn-round ml-auto">
+                                                <a class="text-white"
+                                                   style="text-decoration: none !important;"
+                                                   th:href="@{/users/new}">
+                                                    <i class="fa fa-plus"></i>
+                                                    Add User
+                                                </a>
+                                            </button>-->
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="card-body">
