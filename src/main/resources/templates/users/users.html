@@ -105,6 +105,8 @@
                     </div>
                 </div>
             </div>
+            <div th:replace="modal_fragments :: delete_modal"></div>
+
             <div th:replace="navigation :: footer"></div>
         </div>
     </div>
@@ -112,7 +114,12 @@
     <script >
         $(document).ready(function() {
             $('#basic-datatables').DataTable({});
+            $(".link-delete").on("click", function (e) {
+                e.preventDefault();
+                showConfirmDeleteModal($(this), 'user');
+            });
         });
     </script>
+    <script th:src="@{/assets/js/script.js}"></script>
 </body>
 </html>

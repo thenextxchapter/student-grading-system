@@ -136,7 +136,7 @@
                 if (response === "OK") {
                     form.submit();
                 } else if (response === "Duplicated") {
-                    showModalWarning("There is another user having the email " + userEmail);
+                    showModalWarning("There is another user with the email " + userEmail);
                 } else {
                     showModalError("Unknown response from server");
                 }

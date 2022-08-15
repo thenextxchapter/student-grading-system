@@ -89,7 +89,7 @@
 
     <div th:fragment="delete(deleteURL, entityId)" th:remove="tag">
         <a type="button" data-toggle="tooltip" title=""
-           class="btn btn-link btn-danger"
+           class="btn btn-link btn-danger link-delete"
            data-original-title="Remove"
            th:href="@{${deleteURL}}"
            th:entityId="${entityId}"
