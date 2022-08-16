@@ -120,10 +120,6 @@
     <script >
         moduleURL = "[[@{/users}]]"
 
-        $(document).ready(function() {
-            $('#basic-datatables').DataTable({});
-        });
-
         function checkEmailUnique(form) {
             const url = "[[@{/users/check-email}]]";
             const userEmail = $("#email").val();
@@ -146,7 +142,5 @@
             return false;
         }
     </script>
-    <script th:src="@{/assets/js/form.js}"></script>
-
 </body>
 </html>

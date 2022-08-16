@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: page_head('Login - Student Grader Admin')"></head>
+<body>
+    <div class="wrapper">
+        <div class="main-panel" style="width: 100%">
+
+        <div class="content">
+            <div class="page-inner">
+                <div class="row">
+                    <div class="col-md-4 m-auto">
+                        <div class="mb-3">
+                            <img th:src="@{/assets/img/logo2.svg}" height="100"
+                                 style="margin: 0 auto; display: block" class="logo">
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Sign in to Control Panel</div>
+                            </div>
+                            <div class="card-body">
+
+                                <div th:if="${param.error}" class="alert alert-danger">
+                                    <i class="fas fa-exclamation-circle me-1"></i>
+                                    [[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]
+                                </div>
+
+                                <div th:if="${param.logout}" class="alert alert-primary">
+                                    <i class="fas fa-check-circle me-1"></i>
+                                    You have been logged out
+                                </div>
+
+                                <form th:action="@{/login}" method="post">
+                                    <div class="form-group">
+                                        <label>Email address</label>
+                                        <input type="email" name="email" required class="form-control" placeholder="Enter email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Password</label>
+                                        <a class="float-right" th:href="@{/#}">Forgot?</a>
+                                        <input name="password" type="password" required class="form-control" placeholder="Password">
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" name="remember-me" type="checkbox" checked>
+                                            <span class="form-check-sign">Remember me</span>
+                                        </label>
+                                    </div>
+                                    <input type="submit" class="btn w-100 btn-primary" value="Login">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:replace="navigation :: footer"></div>
+        </div>
+    </div>
+</body>
+</html>

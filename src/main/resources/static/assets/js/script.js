@@ -1,3 +1,10 @@
+$(document).ready(function () {
+    $("#logoutLink").on("click", function (e) {
+        e.preventDefault();
+        document.logoutForm.submit();
+    });
+});
+
 function showConfirmDeleteModal(link, entityName) {
     let entityId = link.attr("entityId");
 
