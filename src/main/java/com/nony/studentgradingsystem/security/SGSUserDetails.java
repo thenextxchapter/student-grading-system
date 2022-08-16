@@ -65,4 +65,8 @@ public class SGSUserDetails implements UserDetails {
 	public String getFirstName() {
 		return this.user.getFirstName();
 	}
+
+	public void setFirstName(String firstName) {
+		this.user.setFirstName(firstName);
+	}
 }

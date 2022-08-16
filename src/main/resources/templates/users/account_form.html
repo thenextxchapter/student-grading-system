@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: page_head('My Profile - Student Grader')"></head>
+<body>
+<div class="wrapper">
+    <div th:replace="navigation :: main_header"></div>
+    <div th:replace="navigation :: sidebar"></div>
+
+    <div class="main-panel">
+        <div class="content">
+            <div class="page-inner">
+                <div class="page-header">
+                    <h4 class="page-title">User Profile</h4>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    Edit Profile
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form th:action="@{/users/save}" method="post" th:object="${user}"
+                                      enctype="multipart/form-data"
+                                      onsubmit="return checkEmailUnique(this);">
+                                    <input type="hidden" th:field="*{id}">
+                                    <div class="row mt-3">
+                                        <div class="col-md-6">
+                                            <div class="form-group form-group-default">
+                                                <label>First Name</label>
+                                                <input type="text" th:field="*{firstName}" class="form-control"
+                                                       required minlength="2" maxlength="45" placeholder="First name">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-group-default">
+                                                <label>Last Name</label>
+                                                <input type="text" th:field="*{lastName}" class="form-control"
+                                                       required minlength="2" maxlength="45" placeholder="Last name">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-md-6">
+                                            <div class="form-group input-solid form-group-default">
+                                                <label>Email</label>
+                                                <input type="email" class="form-control" placeholder="example@mail.com"
+                                                       th:field="*{email}" readonly="readonly" minlength="8" maxlength="128">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Assigned Roles</label>
+                                                <p>
+                                                    <th:block th:each="role : ${user.roles}">
+                                                        <span class="badge text-white bg-primary" th:text="${role.name}"></span>
+                                                    </th:block>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-md-6">
+                                            <div class="form-group form-group-default">
+                                                <label>Password</label>
+                                                <input type="password" th:field="*{password}" class="form-control"
+                                                       placeholder="Change Password"
+                                                       minlength="8" maxlength="20"
+                                                       oninput="checkPasswordMatch(document.getElementById('confirmPassword'))"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-group-default">
+                                                <label>Confirm Password</label>
+                                                <input type="password" id="confirmPassword" class="form-control"
+                                                       placeholder="Confirm Password"
+                                                       minlength="8" maxlength="20"
+                                                       oninput="checkPasswordMatch(this)"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <figure class="text-lg-center mt-3">
+                                            <input type="hidden" th:field="*{photo}">
+                                            <img class="img-lg mb-3 img-avatar" style="object-fit: cover" th:src="@{${user.photosImagePath}}" alt="User Photo">
+                                            <figcaption class="d-flex">
+                                                <input style="width: 300px" type="file" id="fileImage" name="image" class="form-control" accept="image/png, image/jpeg">
+                                            </figcaption>
+                                        </figure>
+                                    </div>
+                                    <div class="text-right mt-3 mb-3">
+                                        <button type="submit" class="btn btn-primary"> Save changes  </button>
+                                        &nbsp;
+                                        <button type="button" class="btn btn-outline-danger" id="buttonCancel"> Cancel  </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:replace="modal_fragments :: modal_dialog"></div>
+
+        <div th:replace="navigation :: footer"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    moduleURL = "[[@{/}]]"
+    function checkPasswordMatch(confirmPassword) {
+        if (confirmPassword.value !== $("#password").val()) {
+            confirmPassword.setCustomValidity("Passwords do not match!");
+        } else {
+            confirmPassword.setCustomValidity("");
+        }
+    }
+</script>
+<script type="text/javascript" th:src="@{/assets/js/form.js}"></script>
+</body>
+</html>
