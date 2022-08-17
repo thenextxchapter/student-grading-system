@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: page_head('New Student - Shop Down Admin')"></head>
+<body>
+<div class="wrapper">
+    <div th:replace="navigation :: main_header"></div>
+    <div th:replace="navigation :: sidebar"></div>
+
+    <div class="main-panel">
+        <div class="content">
+            <div class="page-inner">
+                <div class="page-header">
+                    <h4 class="page-title">[[${pageTitle}]]</h4>
+                    <ul class="breadcrumbs">
+                        <li class="nav-home">
+                            <a th:href="@{/}">
+                                <i class="flaticon-home"></i>
+                            </a>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="nav-item">
+                            <a th:href="@{/students}">Students</a>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="nav-item">
+                            <a th:href="@{/#}">New Student</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    [[${headerTitle}]]
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form th:action="@{/students/save}" method="post" th:object="${student}"
+                                      onsubmit="return checkEmailUnique(this);">
+                                    <input type="hidden" th:field="*{id}">
+                                    <div class="form-group row" th:if="${student.id != null}">
+                                        <label class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Matriculation Number</label>
+                                        <div class="col-lg-4 col-md-9 col-sm-8">
+                                            <input type="text" class="form-control" th:field="*{matricNumber}"
+                                                   required minlength="2" maxlength="45">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">First Name
+                                            <span class="required-label">*</span>
+                                        </label>
+                                        <div class="col-lg-4 col-md-9 col-sm-8">
+                                            <input type="text" class="form-control" th:field="*{firstName}"
+                                                   required minlength="2" maxlength="45" placeholder="Enter First name">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Middle Name</label>
+                                        <div class="col-lg-4 col-md-9 col-sm-8">
+                                            <input type="text" class="form-control" th:field="*{middleName}"
+                                                   minlength="2" maxlength="45" placeholder="Enter Middle name">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Last Name
+                                            <span class="required-label">*</span>
+                                        </label>
+                                        <div class="col-lg-4 col-md-9 col-sm-8">
+                                            <input type="text" class="form-control" th:field="*{lastName}"
+                                                required minlength="2" maxlength="45" placeholder="Enter Last name">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Email address
+                                            <span class="required-label">*</span>
+                                        </label>
+                                        <div class="col-lg-4 col-md-9 col-sm-8">
+                                            <input type="email" class="form-control" placeholder="Enter email"
+                                                th:field="*{email}" required minlength="8" maxlength="128">
+                                        </div>
+                                    </div>
+
+                                    <div class="separator-solid"></div>
+
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Year of Entry
+                                            <span class="required-label">*</span>
+                                        </label>
+                                        <div class="col-lg-4 col-md-9 col-sm-8">
+                                            <div class="select2-input">
+                                                <select class="form-control" required th:field="*{yearOfEntry}">
+                                                    <option value="">&nbsp;</option>
+                                                    <option value="2016">2016</option>
+                                                    <option value="2017">2017</option>
+                                                    <option value="2018">2018</option>
+                                                    <option value="2019">2019</option>
+                                                    <option value="2020">2020</option>
+                                                    <option value="2021">2021</option>
+                                                    <option value="2022">2022</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Select Department
+                                            <span class="required-label">*</span>
+                                        </label>
+                                        <div class="col-lg-4 col-md-9 col-sm-8">
+                                            <div class="select2-input">
+                                                <select class="form-control" required th:field="*{department}">
+                                                    <option value="">&nbsp;</option>
+                                                    <th:block th:each="dept : ${departments}">
+                                                        <option th:value="${dept.id}">[[${dept.name}]]</option>
+                                                    </th:block>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Phone number
+                                            <span class="required-label">*</span>
+                                        </label>
+                                        <div class="col-lg-4 col-md-9 col-sm-8">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon1">+234</span>
+                                                </div>
+                                                <input type="tel" class="form-control"
+                                                       th:field="*{phoneNumber}" required placeholder="Enter tel-no" minlength="8" maxlength="15">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="separator-solid"></div>
+
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Date of Birth
+                                            <span class="required-label">*</span>
+                                        </label>
+                                        <div class="col-lg-4 col-md-9 col-sm-8">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                                </div>
+                                                <input type="date" class="form-control"  placeholder="dd-mm-yyyy"
+                                                       th:field="*{dateOfBirth}" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Gender <span class="required-label">*</span></label>
+                                        <div class="col-lg-4 col-md-9 col-sm-8">
+                                            <div class="select2-input">
+                                                <select class="form-control" required th:field="*{gender}">
+                                                    <option value="">&nbsp;</option>
+                                                    <th:block th:each="sex : ${gender}">
+                                                        <option th:value="${sex}" th:text="${sex.displayValue}"></option>
+                                                    </th:block>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Nationality
+                                            <span class="required-label">*</span>
+                                        </label>
+                                        <div class="col-lg-4 col-md-9 col-sm-8">
+                                            <div class="select2-input">
+                                                <select class="form-control" required th:field="*{nationality}">
+                                                    <option value="">&nbsp;</option>
+                                                    <th:block th:each="country : ${countries}">
+                                                        <option th:value="${country.id}">[[${country.name}]]</option>
+                                                    </th:block>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Religion <span class="required-label">*</span></label>
+                                        <div class="col-lg-4 col-md-9 col-sm-8">
+                                            <div class="select2-input">
+                                                <select class="form-control" required th:field="*{religion}">
+                                                    <option value="">&nbsp;</option>
+                                                    <th:block th:each="faith : ${religion}">
+                                                        <option th:value="${faith}" th:text="${faith.displayValue}"></option>
+                                                    </th:block>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Address
+                                            <span class="required-label">*</span>
+                                        </label>
+                                        <div class="col-lg-4 col-md-9 col-sm-8">
+                                            <textarea class="form-control" th:field="*{address}" rows="5" required minlength="8" maxlength="255"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-check row">
+                                        <label class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">
+                                            <input th:field="*{enabled}" class="form-check-input" type="checkbox" role="switch" value="">
+                                            <span class="form-check-sign">Check to enable student</span>
+                                        </label>
+                                    </div>
+                                    <div class="card-action">
+                                        <input type="submit" class="btn btn-primary" value="Save">
+                                        &nbsp;
+                                        <button type="button" id="buttonCancel" class="btn btn-outline-danger">Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:replace="modal_fragments :: modal_dialog"></div>
+
+        <div th:replace="navigation :: footer"></div>
+    </div>
+</div>
+
+<script >
+    moduleURL = "[[@{/students}]]"
+
+    function checkEmailUnique(form) {
+        const url = "[[@{/students/check_unique}]]";
+        const studentEmail = $("#email").val();
+        const studentId = $("#id").val();
+        // Making an AJAX call with Spring security, we need to pass the csrf value
+        const csrfValue = $("input[name='_csrf']").val();
+        const params = {id: studentId, email: studentEmail, _csrf: csrfValue};
+
+        $.post(url, params, function (response){
+            if (response === "OK") {
+                form.submit();
+            } else if (response === "Duplicated") {
+                showModalWarning("There is another user with the email " + studentEmail);
+            } else {
+                showModalError("Unknown response from server");
+            }
+        }).fail(function () {
+            showModalError("Could not connect to the server");
+        });
+        return false;
+    }
+</script>
+</body>
+</html>

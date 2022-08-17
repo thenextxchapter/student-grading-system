@@ -66,7 +66,7 @@ public class Student {
 	@Column(name = "phone_number", length = 15)
 	private String phoneNumber;
 
-	@DateTimeFormat(pattern = "dd-MM-yyyy")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "dob")
 	private LocalDate dateOfBirth;
 
