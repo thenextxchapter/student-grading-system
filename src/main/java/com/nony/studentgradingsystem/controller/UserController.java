@@ -105,7 +105,7 @@ public class UserController {
 		try {
 			service.delete(id);
 			redirectAttributes.addFlashAttribute("message",
-					"The user ID " + id + " has been deleted successfully");
+					"The user with ID " + id + " has been deleted successfully");
 
 		} catch (UserNotFoundException exception) {
 			redirectAttributes.addFlashAttribute("message", exception.getMessage());
@@ -121,7 +121,7 @@ public class UserController {
 	)  {
 		service.updateUserEnabledStatus(id, enabled);
 		String status = enabled ? "enabled" : "disabled";
-		String message = "The user ID " + id + " has been " + status;
+		String message = "The user with ID " + id + " has been " + status;
 		redirectAttributes.addFlashAttribute("message", message);
 
 		return "redirect:/users";

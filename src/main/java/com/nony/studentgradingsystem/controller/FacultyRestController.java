@@ -12,7 +12,7 @@ public class FacultyRestController {
 	@Autowired
 	private FacultyService service;
 
-	@PostMapping("/students/check_unique")
+	@PostMapping("/faculties/check_unique")
 	public String checkUnique(
 			@Param("id") Integer id,
 			@Param("email") String email
