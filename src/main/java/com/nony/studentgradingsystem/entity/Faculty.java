@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import java.util.HashSet;
@@ -30,6 +32,15 @@ public class Faculty {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+
+	@Column(name = "staff_no", nullable = false)
+	private String staffNumber;
+
+	@PreUpdate
+	@PrePersist
+	public void calc() {
+		staffNumber = "VUG/STAFF/" + id;
+	}
 
 	@Column(length = 128, nullable = false, unique = true)
 	private String email;

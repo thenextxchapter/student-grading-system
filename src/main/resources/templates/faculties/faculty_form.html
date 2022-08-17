@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: page_head('New Lecturer - Student Grader')"></head>
+<body>
+    <div class="wrapper">
+        <div th:replace="navigation :: main_header"></div>
+        <div th:replace="navigation :: sidebar"></div>
+
+        <div class="main-panel">
+            <div class="content">
+                <div class="page-inner">
+                    <div class="page-header">
+                        <h4 class="page-title">[[${pageTitle}]]</h4>
+                        <ul class="breadcrumbs">
+                            <li class="nav-home">
+                                <a th:href="@{/}">
+                                    <i class="flaticon-home"></i>
+                                </a>
+                            </li>
+                            <li class="separator">
+                                <i class="flaticon-right-arrow"></i>
+                            </li>
+                            <li class="nav-item">
+                                <a th:href="@{/faculties}">Faculty</a>
+                            </li>
+                            <li class="separator">
+                                <i class="flaticon-right-arrow"></i>
+                            </li>
+                            <li class="nav-item">
+                                <a th:href="@{/#}">New Lecturer</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        [[${headerTitle}]]
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <form th:action="@{/faculties/save}" method="post" th:object="${faculty}"
+                                          onsubmit="return checkEmailUnique(this);">
+                                        <input type="hidden" th:field="*{id}">
+                                        <div th:if="${faculty.id != null}" class="form-group">
+                                            <label>Staff Number</label>
+                                            <input type="text" class="form-control" th:field="*{staffNumber}"
+                                                   required minlength="2" maxlength="45" placeholder="Staff number">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>First Name <span class="required-label">*</span></label>
+                                            <input type="text" class="form-control" th:field="*{firstName}"
+                                                   required minlength="2" maxlength="45" placeholder="First name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Middle Name</label>
+                                            <input type="text" class="form-control" th:field="*{middleName}"
+                                                   minlength="2" maxlength="45" placeholder="Middle name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Last Name <span class="required-label">*</span></label>
+                                            <input type="text" class="form-control" th:field="*{lastName}"
+                                                   required minlength="2" maxlength="45" placeholder="Last name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Email address <span class="required-label">*</span></label>
+                                            <input type="email" class="form-control" placeholder="Enter email"
+                                                   th:field="*{email}" required minlength="8" maxlength="128">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Phone Number <span class="required-label">*</span></label>
+                                            <input type="tel" class="form-control" th:field="*{phoneNumber}"
+                                                   required minlength="2" maxlength="45" placeholder="Phone number">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Gender <span class="required-label">*</span></label>
+                                            <div class="select2-input">
+                                                <select class="form-control" required th:field="*{gender}">
+                                                    <option value="">&nbsp;</option>
+                                                    <th:block th:each="sex : ${gender}">
+                                                        <option th:value="${sex}" th:text="${sex.displayValue}"></option>
+                                                    </th:block>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Civil Status <span class="required-label">*</span></label>
+                                            <div class="select2-input">
+                                                <select class="form-control" required th:field="*{civilStatus}">
+                                                    <option value="">&nbsp;</option>
+                                                    <th:block th:each="stats : ${status}">
+                                                        <option th:value="${stats}" th:text="${stats.displayValue}"></option>
+                                                    </th:block>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Department</label>
+                                            &nbsp;
+                                            <div class="selectgroup selectgroup-pills">
+                                                <th:block th:each="dept: ${listDepartments}">
+                                                    <label class="selectgroup-item">
+                                                        <input type="checkbox" th:field="*{departments}" role="checkbox" th:value="${dept.id}"
+                                                               class="selectgroup-input">
+                                                        <span class="selectgroup-button">[[${dept.name}]]</span>
+                                                    </label>
+                                                </th:block>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input th:field="*{enabled}" class="form-check-input" type="checkbox" role="switch" value="">
+                                                <span class="form-check-sign">Check to enable user</span>
+                                            </label>
+                                        </div>
+
+                                        <div class="card-action">
+                                            <input type="submit" class="btn btn-primary" value="Save">
+                                            &nbsp;
+                                            <button type="button" id="buttonCancel" class="btn btn-outline-danger">Cancel</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div th:replace="modal_fragments :: modal_dialog"></div>
+
+            <div th:replace="navigation :: footer"></div>
+        </div>
+    </div>
+
+    <script >
+        moduleURL = "[[@{/faculties}]]"
+
+        function checkEmailUnique(form) {
+            const url = "[[@{/faculties/check_unique}]]";
+            const facultyEmail = $("#email").val();
+            const facultyId = $("#id").val();
+            // Making an AJAX call with Spring security, we need to pass the csrf value
+            const csrfValue = $("input[name='_csrf']").val();
+            const params = {id: facultyId, email: facultyEmail, _csrf: csrfValue};
+
+            $.post(url, params, function (response){
+                if (response === "OK") {
+                    form.submit();
+                } else if (response === "DuplicateEmail") {
+                    showModalWarning("There is another user with the email " + userEmail);
+                } else {
+                    showModalError("Unknown response from server");
+                }
+            }).fail(function () {
+                showModalError("Could not connect to the server");
+            });
+            return false;
+        }
+    </script>
+</body>
+</html>

@@ -2,8 +2,10 @@ package com.nony.studentgradingsystem.controller;
 
 import java.util.List;
 
+import com.nony.studentgradingsystem.entity.CivilStatus;
 import com.nony.studentgradingsystem.entity.Department;
 import com.nony.studentgradingsystem.entity.Faculty;
+import com.nony.studentgradingsystem.entity.Gender;
 import com.nony.studentgradingsystem.exception.FacultyNotFoundException;
 import com.nony.studentgradingsystem.service.FacultyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,8 @@ public class FacultyController {
 		faculty.setEnabled(true);
 
 		model.addAttribute("faculty", faculty);
+		model.addAttribute("gender", Gender.values());
+		model.addAttribute("status", CivilStatus.values());
 		model.addAttribute("listDepartments", listDepartments);
 		model.addAttribute("pageTitle", "Create New Lecturer");
 		model.addAttribute("headerTitle", "New Lecturer");
@@ -65,6 +69,8 @@ public class FacultyController {
 
 			model.addAttribute("faculty", faculty);
 			model.addAttribute("listDepartments", listDepartments);
+			model.addAttribute("gender", Gender.values());
+			model.addAttribute("status", CivilStatus.values());
 			model.addAttribute("pageTitle", "Edit Lecturer (ID: " + id + ")");
 			model.addAttribute("headerTitle", "Edit Lecturer");
 
