@@ -50,9 +50,9 @@ public class StudentService {
 		Student studentByEmail = repo.findByEmail(email);
 
 		if (isCreatingNew) {
-			if (studentByEmail != null) return "DuplicateName";
+			if (studentByEmail != null) return "DuplicateEmail";
 		} else {
-			if (studentByEmail != null && studentByEmail.getId() != id) return "DuplicateName";
+			if (studentByEmail != null && studentByEmail.getId() != id) return "DuplicateEmail";
 		}
 		return "OK";
 	}

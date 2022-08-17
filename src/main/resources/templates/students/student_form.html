@@ -244,7 +244,7 @@
         $.post(url, params, function (response){
             if (response === "OK") {
                 form.submit();
-            } else if (response === "Duplicated") {
+            } else if (response === "DuplicateEmail") {
                 showModalWarning("There is another user with the email " + studentEmail);
             } else {
                 showModalError("Unknown response from server");

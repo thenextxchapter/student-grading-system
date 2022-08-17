@@ -63,11 +63,11 @@ public class Student {
 	@Column(length = 20)
 	private Gender gender;
 
-	@Column(name = "phone_number", length = 15)
+	@Column(name = "phone_number", length = 15, nullable = false)
 	private String phoneNumber;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@Column(name = "dob")
+	@Column(name = "dob", nullable = false)
 	private LocalDate dateOfBirth;
 
 	@Column(nullable = false)
