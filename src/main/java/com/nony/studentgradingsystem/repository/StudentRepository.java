@@ -1,6 +1,8 @@
 package com.nony.studentgradingsystem.repository;
 
 import com.nony.studentgradingsystem.entity.Student;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,4 +10,10 @@ import org.springframework.stereotype.Repository;
 public interface StudentRepository extends CrudRepository<Student, Integer> {
 
 	Student findByEmail(String email);
+
+	Long countById(Integer id);
+
+	@Query("UPDATE User u SET u.enabled = ?2 WHERE u.id = ?1")
+	@Modifying
+	void updateEnabledStatus(Integer id, boolean enabled);
 }

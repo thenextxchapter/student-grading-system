@@ -3,10 +3,12 @@ package com.nony.studentgradingsystem.service;
 import javax.transaction.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import com.nony.studentgradingsystem.entity.Country;
 import com.nony.studentgradingsystem.entity.Department;
 import com.nony.studentgradingsystem.entity.Student;
+import com.nony.studentgradingsystem.exception.StudentNotFoundException;
 import com.nony.studentgradingsystem.repository.CountryRepository;
 import com.nony.studentgradingsystem.repository.DepartmentRepository;
 import com.nony.studentgradingsystem.repository.StudentRepository;
@@ -53,5 +55,13 @@ public class StudentService {
 			if (studentByEmail != null && studentByEmail.getId() != id) return "DuplicateName";
 		}
 		return "OK";
+	}
+
+	public Student get(Integer id) throws StudentNotFoundException {
+		try {
+			return repo.findById(id).get();
+		} catch (NoSuchElementException exception) {
+			throw new StudentNotFoundException("Could not find any student with ID " + id);
+		}
 	}
 }
