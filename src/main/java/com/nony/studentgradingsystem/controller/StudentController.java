@@ -55,7 +55,7 @@ public class StudentController {
 	}
 
 	@PostMapping("/students/save")
-	public String saveUser(
+	public String saveStudent(
 			Student student,
 			RedirectAttributes redirectAttributes
 	) {
@@ -66,7 +66,7 @@ public class StudentController {
 	}
 
 	@GetMapping("/students/edit/{id}")
-	public String editUser(
+	public String editStudent(
 			@PathVariable(name = "id") Integer id,
 			RedirectAttributes redirectAttributes,
 			Model model
@@ -82,7 +82,7 @@ public class StudentController {
 			model.addAttribute("religion", Religion.values());
 			model.addAttribute("departments", listDepartments);
 			model.addAttribute("countries", listCountries);
-			model.addAttribute("pageTitle", "Edit User (ID: " + id + ")");
+			model.addAttribute("pageTitle", "Edit Student (ID: " + id + ")");
 			model.addAttribute("headerTitle", "Edit Student");
 
 			return "students/student_form";
@@ -90,6 +90,36 @@ public class StudentController {
 			redirectAttributes.addFlashAttribute("message", exception.getMessage());
 			return "redirect:/students";
 		}
+	}
+
+	@GetMapping("/students/delete/{id}")
+	public String deleteStudent(
+			@PathVariable(name = "id") Integer id,
+			RedirectAttributes redirectAttributes
+	) {
+		try {
+			service.delete(id);
+			redirectAttributes.addFlashAttribute("message",
+					"The Student with ID " + id + " has been deleted successfully");
+		} catch (StudentNotFoundException exception) {
+			redirectAttributes.addFlashAttribute("message", exception);
+		}
+
+		return "redirect:/students";
+	}
+
+	@GetMapping("/students/{id}/enabled/{status}")
+	public String updateStudentEnabledStatus(
+			@PathVariable("id") Integer id,
+			@PathVariable("status") boolean enabled,
+			RedirectAttributes redirectAttributes
+	)  {
+		service.updateStudentEnabledStatus(id, enabled);
+		String status = enabled ? "enabled" : "disabled";
+		String message = "The Student with ID " + id + " has been " + status;
+		redirectAttributes.addFlashAttribute("message", message);
+
+		return "redirect:/students";
 	}
 
 }

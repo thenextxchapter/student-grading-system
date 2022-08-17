@@ -64,4 +64,17 @@ public class StudentService {
 			throw new StudentNotFoundException("Could not find any student with ID " + id);
 		}
 	}
+
+	public void delete(Integer id) throws StudentNotFoundException {
+		Long countById = repo.countById(id);
+		if (countById == null || countById == 0) {
+			throw new StudentNotFoundException("Could not find any student with ID " + id);
+		}
+
+		repo.deleteById(id);
+	}
+
+	public void updateStudentEnabledStatus(Integer id, boolean enabled) {
+		repo.updateEnabledStatus(id, enabled);
+	}
 }
