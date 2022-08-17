@@ -27,7 +27,7 @@ public class Department {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	@Column(length = 30, nullable = false)
+	@Column(length = 60, nullable = false)
 	private String name;
 
 	@Column(length = 4, nullable = false)

@@ -15,12 +15,14 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import java.time.LocalDate;
 import java.time.Year;
 import java.util.Date;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "students")
@@ -38,7 +40,7 @@ public class Student {
 	private Department department;
 
 	@Column(name = "entry_year", nullable = false)
-	private Year yearOfEntry;
+	private Integer yearOfEntry;
 
 	@Column(name = "matric_no", nullable = false)
 	private String matricNumber;
@@ -68,9 +70,9 @@ public class Student {
 	@Column(name = "phone_number", length = 15)
 	private String phoneNumber;
 
-	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	@Column(name = "dob")
-	private Date dateOfBirth;
+	private LocalDate dateOfBirth;
 
 	@Column(nullable = false)
 	private String address;
@@ -85,9 +87,11 @@ public class Student {
 
 	private boolean enabled;
 
-	public Student(String matricNumber, String email, String firstName, String middleName, String lastName, Gender gender,
-			String phoneNumber, Date dateOfBirth, String address, Religion religion) {
-		this.matricNumber = matricNumber;
+	public Student(Department department, Integer yearOfEntry, String email, String firstName, String middleName,
+			String lastName,
+			Gender gender, String phoneNumber, LocalDate dateOfBirth, String address, Religion religion, Country nationality) {
+		this.department = department;
+		this.yearOfEntry = yearOfEntry;
 		this.email = email;
 		this.firstName = firstName;
 		this.middleName = middleName;
@@ -97,6 +101,7 @@ public class Student {
 		this.dateOfBirth = dateOfBirth;
 		this.address = address;
 		this.religion = religion;
+		this.nationality = nationality;
 	}
 
 	@Override
