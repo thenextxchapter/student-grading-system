@@ -1,5 +1,7 @@
 package com.nony.studentgradingsystem.controller;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 import com.nony.studentgradingsystem.entity.Country;
@@ -8,6 +10,7 @@ import com.nony.studentgradingsystem.entity.Gender;
 import com.nony.studentgradingsystem.entity.Religion;
 import com.nony.studentgradingsystem.entity.Student;
 import com.nony.studentgradingsystem.exception.StudentNotFoundException;
+import com.nony.studentgradingsystem.export.StudentPDFExporter;
 import com.nony.studentgradingsystem.service.DepartmentService;
 import com.nony.studentgradingsystem.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,6 +123,13 @@ public class StudentController {
 		redirectAttributes.addFlashAttribute("message", message);
 
 		return "redirect:/students";
+	}
+
+	@GetMapping("/students/export/pdf")
+	public void exportToPDF(HttpServletResponse response) throws IOException {
+		List<Student> listStudents = service.listAll();
+		StudentPDFExporter exporter = new StudentPDFExporter();
+		exporter.export(listStudents, response);
 	}
 
 }
