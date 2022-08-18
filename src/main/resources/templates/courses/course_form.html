@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: page_head('New Lecturer - Student Grader')"></head>
+<body>
+    <div class="wrapper">
+        <div th:replace="navigation :: main_header"></div>
+        <div th:replace="navigation :: sidebar"></div>
+
+        <div class="main-panel">
+            <div class="content">
+                <div class="page-inner">
+                    <div class="page-header">
+                        <h4 class="page-title">[[${pageTitle}]]</h4>
+                        <ul class="breadcrumbs">
+                            <li class="nav-home">
+                                <a th:href="@{/}">
+                                    <i class="flaticon-home"></i>
+                                </a>
+                            </li>
+                            <li class="separator">
+                                <i class="flaticon-right-arrow"></i>
+                            </li>
+                            <li class="nav-item">
+                                <a th:href="@{/courses}">Course</a>
+                            </li>
+                            <li class="separator">
+                                <i class="flaticon-right-arrow"></i>
+                            </li>
+                            <li class="nav-item">
+                                <a th:href="@{/#}">New Course</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        [[${headerTitle}]]
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <form th:action="@{/courses/save}" method="post" th:object="${course}">
+                                        <input type="hidden" th:field="*{id}">
+                                        <div class="form-group">
+                                            <label>Level <span class="required-label">*</span></label>
+                                            <div class="select2-input">
+                                                <select class="form-control" required th:field="*{level}">
+                                                    <option value="">&nbsp;</option>
+                                                    <th:block th:each="grade : ${level}">
+                                                        <option th:value="${grade}" th:text="${grade.displayValue}"></option>
+                                                    </th:block>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Semester <span class="required-label">*</span></label>
+                                            <div class="select2-input">
+                                                <select class="form-control" required th:field="*{semester}">
+                                                    <option value="">&nbsp;</option>
+                                                    <th:block th:each="sem : ${semester}">
+                                                        <option th:value="${sem}" th:text="${sem.displayValue}"></option>
+                                                    </th:block>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Start Year <span class="required-label">*</span></label>
+                                            <input type="number" class="form-control" th:field="*{startYear}"
+                                                   required placeholder="Start Year">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>End Year <span class="required-label">*</span></label>
+                                            <input type="number" class="form-control" th:field="*{endYear}"
+                                                   required placeholder="End Year">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Department <span class="required-label">*</span></label>
+                                            <div class="select2-input">
+                                                <select class="form-control" required th:field="*{department}">
+                                                    <option value="">&nbsp;</option>
+                                                    <th:block th:each="dept : ${listDepartments}">
+                                                        <option th:value="${dept.id}" th:text="${dept.name}"></option>
+                                                    </th:block>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="card-action">
+                                            <input type="submit" class="btn btn-primary" value="Save">
+                                            &nbsp;
+                                            <button type="button" id="buttonCancel" class="btn btn-outline-danger">Cancel</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div th:replace="modal_fragments :: modal_dialog"></div>
+
+            <div th:replace="navigation :: footer"></div>
+        </div>
+    </div>
+
+    <script >
+        moduleURL = "[[@{/courses}]]"
+    </script>
+</body>
+</html>

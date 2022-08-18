@@ -47,7 +47,7 @@ public class SubjectService {
 			if (subjectByName != null && subjectByName.getId() != id) {
 				return "DuplicateName";
 			} else if (subjectByCode != null && subjectByCode.getId() != id) {
-				return "DuplicateName";
+				return "DuplicateCode";
 			}
 		}
 

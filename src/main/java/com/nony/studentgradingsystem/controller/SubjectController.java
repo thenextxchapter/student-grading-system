@@ -49,7 +49,7 @@ public class SubjectController {
 		service.save(subject);
 		redirectAttributes.addFlashAttribute("message", "The subject has been saved successfully");
 
-		return "redirect:/faculties";
+		return "redirect:/subjects";
 	}
 
 	@GetMapping("/subjects/edit/{id}")

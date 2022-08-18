@@ -2,7 +2,7 @@ package com.nony.studentgradingsystem.entity;
 
 public enum Semester {
 	FIRST_SEMESTER("1st Semester"),
-	SECOND_SECOND("2nd Semester");
+	SECOND_SEMESTER("2nd Semester");
 
 	private final String displayValue;
 
