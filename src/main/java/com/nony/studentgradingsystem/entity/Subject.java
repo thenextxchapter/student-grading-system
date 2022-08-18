@@ -32,7 +32,7 @@ public class Subject {
 	@Column(length = 4, nullable = false)
 	private Integer codeNumber;
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String code;
 
 	@PreUpdate
