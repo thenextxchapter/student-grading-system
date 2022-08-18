@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import com.nony.studentgradingsystem.entity.Course;
+import com.nony.studentgradingsystem.entity.Department;
 import com.nony.studentgradingsystem.exception.CourseNotFoundException;
 import com.nony.studentgradingsystem.repository.CourseRepository;
+import com.nony.studentgradingsystem.repository.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +20,15 @@ public class CourseService {
 	@Autowired
 	private CourseRepository courseRepo;
 
+	@Autowired
+	private DepartmentRepository departmentRepo;
+
 	public List<Course> listAll() {
 		return (List<Course>) courseRepo.findAll();
+	}
+
+	public List<Department> listDepartments() {
+		return (List<Department>) departmentRepo.findAll();
 	}
 
 	public Course save(Course course) {
