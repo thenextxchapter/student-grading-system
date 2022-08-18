@@ -6,12 +6,15 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import com.nony.studentgradingsystem.entity.Country;
+import com.nony.studentgradingsystem.entity.Course;
 import com.nony.studentgradingsystem.entity.Department;
 import com.nony.studentgradingsystem.entity.Student;
+import com.nony.studentgradingsystem.entity.Subject;
 import com.nony.studentgradingsystem.exception.StudentNotFoundException;
 import com.nony.studentgradingsystem.repository.CountryRepository;
 import com.nony.studentgradingsystem.repository.DepartmentRepository;
 import com.nony.studentgradingsystem.repository.StudentRepository;
+import com.nony.studentgradingsystem.repository.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +31,9 @@ public class StudentService {
 	@Autowired
 	CountryRepository countryRepo;
 
+	@Autowired
+	SubjectRepository subjectRepo;
+
 	public List<Student> listAll() {
 		return (List<Student>) repo.findAll();
 	}
@@ -36,8 +42,8 @@ public class StudentService {
 		return (List<Country>) countryRepo.findAll();
 	}
 
-	public List<Department> listDepartments(){
-		return (List<Department>) deptRepo.findAll();
+	public List<Subject> listSubjectByCourse(Course course) {
+		return (List<Subject>) subjectRepo.findSubjectByCourse(course);
 	}
 
 	public Student save(Student student) {

@@ -113,7 +113,8 @@
                                         <div class="col-lg-4 col-md-9 col-sm-8">
                                             <div class="select2-input">
                                                 <select class="form-control" required th:field="*{department}">
-                                                    <option value="">&nbsp;</option>
+                                                    <option value="0">Select Department</option>
+
                                                     <th:block th:each="dept : ${departments}">
                                                         <option th:value="${dept.id}">[[${dept.name}]]</option>
                                                     </th:block>
@@ -206,6 +207,20 @@
                                         </div>
                                     </div>
 
+                                    <div class="separator-solid"></div>
+
+                                    <div class="card-title">Enroll Student to a Course</div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Enroll Student</label>
+                                        <div class="col-lg-4 col-md-9 col-sm-8">
+                                            <div class="select2-input">
+                                                <select class="form-control" th:field="*{course}">
+                                                    <option value="0">Select Course</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="form-check row">
                                         <label class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">
                                             <input th:field="*{enabled}" class="form-check-input" type="checkbox" role="switch" value="">
@@ -232,6 +247,30 @@
 
 <script >
     moduleURL = "[[@{/students}]]"
+
+    const dropDownDepartments = $("#department");
+    const dropDownCourses = $("#course");
+
+    $(document).ready(function () {
+        dropDownDepartments.change(function () {
+            console.log("hey");
+            dropDownCourses.empty();
+            getCourses();
+        });
+
+        getCourses();
+    });
+
+    function getCourses() {
+        const departmentId = dropDownDepartments.val();
+        const url = "/studentgradingsystem/departments/" + departmentId + "/courses";
+
+        $.get(url, function (responseJson) {
+            $.each(responseJson, function (index, course) {
+                $("<option>").val(course.id).text((course.level).toLowerCase() + ', ' + (course.semester).toLowerCase()).appendTo(dropDownCourses);
+            });
+        });
+    }
 
     function checkEmailUnique(form) {
         const url = "[[@{/students/check_unique}]]";

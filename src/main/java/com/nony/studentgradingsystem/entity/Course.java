@@ -1,5 +1,6 @@
 package com.nony.studentgradingsystem.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -9,9 +10,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -44,6 +49,9 @@ public class Course {
 
 	@Column(nullable = false)
 	private String session;
+
+	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+	private List<Subject> courseSubjects = new ArrayList<>();
 
 	@PreUpdate
 	@PrePersist

@@ -33,7 +33,7 @@ public class StudentRepositoryTests {
 	@Autowired
 	private TestEntityManager entityManager;
 
-	@Test
+	/*@Test
 	public void testCreateNewStudent() {
 		Department department = entityManager.find(Department.class, 7);
 		Country nigeria = entityManager.find(Country.class, 164);
@@ -46,7 +46,7 @@ public class StudentRepositoryTests {
 		Student savedStudent = repo.save(student);
 		System.out.println(student);
 		assertThat(savedStudent.getId()).isGreaterThan(0);
-	}
+	}*/
 
 	@Test
 	public void testGetStudentById() {

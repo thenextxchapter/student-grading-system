@@ -100,6 +100,13 @@
                                                     <div th:replace="fragments :: edit('/students/edit/' + ${student.id})"></div>
 
                                                     <div th:replace="fragments :: delete('/students/delete/' + ${student.id}, ${student.id})"></div>
+                                                    <a type="button" data-toggle="tooltip" title=""
+                                                       class="btn btn-link btn-success btn-lg"
+                                                       data-original-title="Register"
+                                                       th:href="@{'/students/' + ${student.id} + '/register-subjects/' + ${student.getCourse().id}}"
+                                                       style="padding: .65rem .6rem; text-decoration: none !important;">
+                                                        <i class="icon-login"></i>
+                                                    </a>
                                                 </div>
                                             </td>
                                         </tr>

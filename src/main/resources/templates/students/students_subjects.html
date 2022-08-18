@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: page_head('Students - Student Grader')"></head>
+<body>
+<div class="wrapper">
+    <div th:replace="navigation :: main_header"></div>
+    <div th:replace="navigation :: sidebar"></div>
+
+    <div class="main-panel">
+        <div class="content">
+            <div class="page-inner">
+                <div class="page-header">
+                    <h4 class="page-title">List of Subjects</h4>
+                    <ul class="breadcrumbs">
+                        <li class="nav-home">
+                            <a th:href="@{/}">
+                                <i class="flaticon-home"></i>
+                            </a>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="nav-item">
+                            <a th:href="@{/students}">Students</a>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="nav-item">
+                            <a th:href="@{/#}">Subjects</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div th:replace="fragments :: message"></div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title d-flex">
+                                    Register Subjects for [[${studentName}]]
+                                </div>
+                            </div>
+                            <form th:action="@{/students/save}" method="post" class="card-body" th:object="${student}">
+                                <input type="hidden" th:field="*{id}">
+                                <input type="hidden" th:field="*{matricNumber}">
+                                <input type="hidden" th:field="*{firstName}">
+                                <input type="hidden" th:field="*{middleName}">
+                                <input type="hidden" th:field="*{lastName}">
+                                <input type="hidden" th:field="*{email}">
+                                <input type="hidden" th:field="*{yearOfEntry}">
+                                <input type="hidden" th:field="*{department}">
+                                <input type="hidden" th:field="*{phoneNumber}">
+                                <input type="hidden" th:field="*{dateOfBirth}">
+                                <input type="hidden" th:field="*{gender}">
+                                <input type="hidden" th:field="*{nationality}">
+                                <input type="hidden" th:field="*{religion}">
+                                <input type="hidden" th:field="*{address}">
+                                <input type="hidden" th:field="*{course}">
+                                <input type="hidden" th:field="*{enabled}">
+                                <div class="table-responsive">
+                                    <table id="basic-datatables" class="display table table-hover" cellspacing="0" >
+                                        <thead>
+                                        <tr>
+                                            <th>Check</th>
+                                            <th>Subject</th>
+                                            <th>Code</th>
+                                            <th>Description</th>
+                                        </tr>
+                                        </thead>
+                                        <tfoot>
+                                        <tr>
+                                            <th>Check</th>
+                                            <th>Subject</th>
+                                            <th>Code</th>
+                                            <th>Description</th>
+                                        </tr>
+                                        </tfoot>
+                                        <tbody>
+                                        <tr th:each="subject : ${listSubjects}">
+                                            <td>
+                                                <input class="form-check-input" th:field="*{subjects}" th:value="${subject.id}" type="checkbox" >
+                                            </td>
+                                            <td th:text="${subject.name}"></td>
+                                            <td th:text="${subject.code}"></td>
+                                            <td th:text="${subject.description}"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="card-action">
+                                    <input type="submit" class="btn btn-primary" value="Save">
+                                    &nbsp;
+                                    <button type="button" id="buttonCancel" class="btn btn-outline-danger">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:replace="modal_fragments :: delete_modal"></div>
+
+        <div th:replace="navigation :: footer"></div>
+    </div>
+</div>
+
+<script >
+    moduleURL = "[[@{/students}]]"
+
+    $(document).ready(function() {
+        $('#basic-datatables').DataTable({});
+        $(".link-delete").on("click", function (e) {
+            e.preventDefault();
+            showConfirmDeleteModal($(this), 'student');
+        });
+    });
+</script>
+<script th:src="@{/assets/js/script.js}"></script>
+</body>
+</html>

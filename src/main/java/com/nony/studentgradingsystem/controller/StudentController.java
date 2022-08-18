@@ -5,12 +5,16 @@ import java.io.IOException;
 import java.util.List;
 
 import com.nony.studentgradingsystem.entity.Country;
+import com.nony.studentgradingsystem.entity.Course;
 import com.nony.studentgradingsystem.entity.Department;
 import com.nony.studentgradingsystem.entity.Gender;
 import com.nony.studentgradingsystem.entity.Religion;
 import com.nony.studentgradingsystem.entity.Student;
+import com.nony.studentgradingsystem.entity.Subject;
+import com.nony.studentgradingsystem.exception.CourseNotFoundException;
 import com.nony.studentgradingsystem.exception.StudentNotFoundException;
 import com.nony.studentgradingsystem.export.StudentPDFExporter;
+import com.nony.studentgradingsystem.service.CourseService;
 import com.nony.studentgradingsystem.service.DepartmentService;
 import com.nony.studentgradingsystem.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +33,9 @@ public class StudentController {
 
 	@Autowired
 	private DepartmentService deptService;
+
+	@Autowired
+	private CourseService courseService;
 
 	@GetMapping("/students")
 	public String listAllStudents(Model model) {
@@ -132,4 +139,29 @@ public class StudentController {
 		exporter.export(listStudents, response);
 	}
 
+	@GetMapping("/students/{studentId}/register-subjects/{id}")
+	public String registerSubjects(Model model, @PathVariable("id") Integer id, @PathVariable("studentId") Integer studentId)
+			throws CourseNotFoundException, StudentNotFoundException {
+		Course course = courseService.get(id);
+		Student student = service.get(studentId);
+
+		List<Subject> listSubjectByCourse = service.listSubjectByCourse(course);
+		String name = service.get(studentId).getFirstName();
+
+		model.addAttribute("listSubjects", listSubjectByCourse);
+		model.addAttribute("student", student);
+		model.addAttribute("studentName", name);
+
+		/* We need a list of subjects per student */
+		return "students/students_subjects";
+	}
+
+	/*@PostMapping("/students/register-subjects/save")
+	public String saveRegisteredSubject(Student student, RedirectAttributes redirectAttributes) {
+		service.save(student);
+		redirectAttributes.addFlashAttribute("message", "The subjects have been registered successfully");
+
+		return "redirect:/students";
+	}
+*/
 }
