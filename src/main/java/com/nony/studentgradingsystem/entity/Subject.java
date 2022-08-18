@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PostUpdate;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -35,7 +36,7 @@ public class Subject {
 	@Column(nullable = false, unique = true)
 	private String code;
 
-	@PreUpdate
+	@PostUpdate
 	@PrePersist
 	public void calc() {
 		code = course.getDepartment().getCode() + codeNumber;

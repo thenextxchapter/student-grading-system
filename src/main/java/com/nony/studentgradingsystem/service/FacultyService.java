@@ -23,10 +23,6 @@ public class FacultyService {
 	@Autowired
 	private DepartmentRepository departmentRepo;
 
-	public Faculty getByFaculty(String email) {
-		return facultyRepo.getFacultyByEmail(email);
-	}
-
 	public List<Faculty> listAll() {
 		return (List<Faculty>) facultyRepo.findAll();
 	}

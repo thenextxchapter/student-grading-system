@@ -13,5 +13,12 @@ public interface SubjectRepository extends CrudRepository<Subject, Integer> {
 	@Query("SELECT s FROM Subject s WHERE s.code = :code")
 	Faculty getSubjectByCode(@Param("code") String code);
 
+	@Query("SELECT s FROM Subject s WHERE s.name = :code")
+	Faculty getSubjectByName(@Param("name") String name);
+
 	Long countById(Integer id);
+
+	Subject findByName(String name);
+
+	Subject findByCode(String code);
 }

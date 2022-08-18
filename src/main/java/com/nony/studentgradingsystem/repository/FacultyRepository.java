@@ -10,9 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FacultyRepository extends CrudRepository<Faculty, Integer> {
 
-	@Query("SELECT f FROM Faculty f WHERE f.email = :email")
-	Faculty getFacultyByEmail(@Param("email") String email);
-
 	Long countById(Integer id);
 
 	@Query("UPDATE Faculty f SET f.enabled = ?2 WHERE f.id = ?1")
