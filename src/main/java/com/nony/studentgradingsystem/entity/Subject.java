@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.PostUpdate;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
@@ -53,6 +54,10 @@ public class Subject {
 	@ManyToOne
 	@JoinColumn(name = "course_id")
 	private Course course;
+
+	@OneToOne
+	@JoinColumn(name = "score_id")
+	private Score score;
 
 	public Subject(String name, Integer codeNumber, String description) {
 		this.name = name;

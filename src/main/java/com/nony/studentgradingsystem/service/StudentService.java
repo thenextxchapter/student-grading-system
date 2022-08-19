@@ -8,6 +8,7 @@ import java.util.NoSuchElementException;
 import com.nony.studentgradingsystem.entity.Country;
 import com.nony.studentgradingsystem.entity.Course;
 import com.nony.studentgradingsystem.entity.Department;
+import com.nony.studentgradingsystem.entity.Score;
 import com.nony.studentgradingsystem.entity.Student;
 import com.nony.studentgradingsystem.entity.Subject;
 import com.nony.studentgradingsystem.exception.StudentNotFoundException;
@@ -45,6 +46,10 @@ public class StudentService {
 	public List<Subject> listSubjectByCourse(Course course) {
 		return (List<Subject>) subjectRepo.findSubjectByCourse(course);
 	}
+
+	/*public List<Score> listSubjectScores(Subject subject) {
+		return subjectRepo.
+	}*/
 
 	public Student save(Student student) {
 		return repo.save(student);

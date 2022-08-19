@@ -2,19 +2,14 @@ package com.nony.studentgradingsystem;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.List;
+import java.util.Optional;
 
-import com.nony.studentgradingsystem.entity.Country;
 import com.nony.studentgradingsystem.entity.Course;
-import com.nony.studentgradingsystem.entity.Department;
-import com.nony.studentgradingsystem.entity.Gender;
-import com.nony.studentgradingsystem.entity.Religion;
 import com.nony.studentgradingsystem.entity.Score;
 import com.nony.studentgradingsystem.entity.Student;
 import com.nony.studentgradingsystem.entity.Subject;
 import com.nony.studentgradingsystem.repository.CourseRepository;
+import com.nony.studentgradingsystem.repository.ScoreRepository;
 import com.nony.studentgradingsystem.repository.StudentRepository;
 import com.nony.studentgradingsystem.repository.SubjectRepository;
 import org.junit.jupiter.api.Test;
@@ -27,31 +22,30 @@ import org.springframework.test.annotation.Rollback;
 @DataJpaTest(showSql = false)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Rollback(value = false)
-public class SubjectRepositoryTests {
+public class ScoreRepositoryTests {
 
 	@Autowired
 	SubjectRepository repo;
 
 	@Autowired
-	CourseRepository courseRepo;
+	StudentRepository studentRepo;
+
+	@Autowired
+	ScoreRepository scoreRepo;
 
 	@Autowired
 	private TestEntityManager entityManager;
 
 	@Test
-	public void testGetSubjectsByCourse() {
-		Course course = courseRepo.findById(24).get();
+	public void testCreateResult() {
+		Student student = entityManager.find(Student.class, 30);
+		Optional<Subject> subject = repo.findById(27);
 
-		Iterable<Subject> listSubjects = repo.findSubjectByCourse(course);
-		listSubjects.forEach(System.out::println);
+		Score test = new Score(10, 10, 10, 10, 60);
+		Score savedTest = scoreRepo.save(test);
 
-	}
-
-	@Test
-	public void testGetScoresPerSubject() {
-		Course course = courseRepo.findById(24).get();
-
-
+		assertThat(savedTest.getId()).isGreaterThan(0);
 
 	}
+
 }

@@ -1,7 +1,9 @@
 package com.nony.studentgradingsystem.repository;
 
 import com.nony.studentgradingsystem.entity.Course;
+import com.nony.studentgradingsystem.entity.Score;
 import com.nony.studentgradingsystem.entity.Subject;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

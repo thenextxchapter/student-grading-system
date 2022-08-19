@@ -81,7 +81,7 @@ public class Student {
 	private String address;
 
 	@Enumerated(EnumType.STRING)
-	@Column(length = 20)
+	@Column(length = 50)
 	private Religion religion;
 
 	@ManyToOne

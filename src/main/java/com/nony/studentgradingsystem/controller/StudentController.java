@@ -9,6 +9,7 @@ import com.nony.studentgradingsystem.entity.Course;
 import com.nony.studentgradingsystem.entity.Department;
 import com.nony.studentgradingsystem.entity.Gender;
 import com.nony.studentgradingsystem.entity.Religion;
+import com.nony.studentgradingsystem.entity.Score;
 import com.nony.studentgradingsystem.entity.Student;
 import com.nony.studentgradingsystem.entity.Subject;
 import com.nony.studentgradingsystem.exception.CourseNotFoundException;
@@ -144,7 +145,6 @@ public class StudentController {
 			throws CourseNotFoundException, StudentNotFoundException {
 		Course course = courseService.get(id);
 		Student student = service.get(studentId);
-
 		List<Subject> listSubjectByCourse = service.listSubjectByCourse(course);
 		String name = service.get(studentId).getFirstName();
 
@@ -156,12 +156,22 @@ public class StudentController {
 		return "students/students_subjects";
 	}
 
-	/*@PostMapping("/students/register-subjects/save")
-	public String saveRegisteredSubject(Student student, RedirectAttributes redirectAttributes) {
-		service.save(student);
-		redirectAttributes.addFlashAttribute("message", "The subjects have been registered successfully");
+	/*@GetMapping("/students/{studentId}/compute-grades/{courseId}")
+	public String computeGrades(Model model,
+			@PathVariable("studentId") Integer studentId,
+			@PathVariable("courseId") Integer courseId)
+			throws CourseNotFoundException, StudentNotFoundException {
+		Course course = courseService.get(courseId);
+		Student student = service.get(studentId);
 
-		return "redirect:/students";
-	}
-*/
+		List<Subject> listSubjectByCourse = service.listSubjectByCourse(course);
+//		List<Score> listSubjectScores = listSubjectByCourse
+		String name = service.get(studentId).getFirstName();
+
+		model.addAttribute("listSubjects", listSubjectByCourse);
+		model.addAttribute("student", student);
+		model.addAttribute("studentName", name);
+
+		return "";
+	}*/
 }
