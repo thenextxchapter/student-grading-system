@@ -14,6 +14,7 @@ import javax.persistence.Transient;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.nony.studentgradingsystem.Constants;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -78,7 +79,7 @@ public class User {
 
 	@Transient
 	public String getPhotosImagePath() {
-		if (id == null || photo == null) return "/assets/img/cameraSvg.png";
-		return "/user-photos/" + this.id + "/" + this.photo;
+		if (id == null || photo == null) return Constants.S3_BASE_URI + "/img/cameraSvg.png";
+		return Constants.S3_BASE_URI + "/user-photos/" + this.id + "/" + this.photo;
 	}
 }

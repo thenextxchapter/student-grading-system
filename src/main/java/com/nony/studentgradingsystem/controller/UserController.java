@@ -9,6 +9,7 @@ import com.nony.studentgradingsystem.entity.User;
 import com.nony.studentgradingsystem.exception.UserNotFoundException;
 import com.nony.studentgradingsystem.export.UserPDFExporter;
 import com.nony.studentgradingsystem.service.UserService;
+import com.nony.studentgradingsystem.utils.AmazonS3Util;
 import com.nony.studentgradingsystem.utils.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -60,11 +61,10 @@ public class UserController {
 			user.setPhoto(fileName);
 			User savedUser = service.save(user);
 
-			String uploadDir = "../user-photos/" + savedUser.getId();
+			String uploadDir = "user-photos/" + savedUser.getId();
 
-			FileUploadUtil.cleanDir(uploadDir);
-
-			FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+			AmazonS3Util.removeFolder(uploadDir);
+			AmazonS3Util.uploadFile(uploadDir, fileName, multipartFile.getInputStream());
 		} else {
 			if (user.getPhoto().isEmpty()) user.setPhoto(null);
 			service.save(user);
@@ -104,6 +104,9 @@ public class UserController {
 	) {
 		try {
 			service.delete(id);
+			String userPhotosDir = "user-photos/" + id;
+			AmazonS3Util.removeFolder(userPhotosDir);
+
 			redirectAttributes.addFlashAttribute("message",
 					"The user with ID " + id + " has been deleted successfully");
 

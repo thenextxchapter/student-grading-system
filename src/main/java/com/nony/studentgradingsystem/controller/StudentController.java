@@ -9,7 +9,6 @@ import com.nony.studentgradingsystem.entity.Course;
 import com.nony.studentgradingsystem.entity.Department;
 import com.nony.studentgradingsystem.entity.Gender;
 import com.nony.studentgradingsystem.entity.Religion;
-import com.nony.studentgradingsystem.entity.Score;
 import com.nony.studentgradingsystem.entity.Student;
 import com.nony.studentgradingsystem.entity.Subject;
 import com.nony.studentgradingsystem.exception.CourseNotFoundException;
